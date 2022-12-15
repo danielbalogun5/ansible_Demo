@@ -1,15 +1,14 @@
 ---
-- hosts: app
-  become: true
+- hosts: web
+  become: yes
   tasks:
-    - name: Setup nginx conf
-      template:
-        src=nginx.conf.tpl
-        dest=/etc/nginx/nginx.conf
-      notify: restart nginx
-  handlers:
-    - name: restart nginx
-      service:
-        name=nginx
-        state=started
+  - name: "apt-get update"
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: "install nginx"
+    apt:
+      name: ['nginx']
+      state: latest
         enabled: yes  
