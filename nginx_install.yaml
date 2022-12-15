@@ -1,14 +1,15 @@
 ---
-- name: set up webserver
-  hosts: all
+- hosts: app
   become: true
   tasks:
-    - name: ensure nginx is at the latest version
-      apt:
-        name: nginx
-        state: latest
-    - name: start nginx
+    - name: Setup nginx conf
+      template:
+        src=nginx.conf.tpl
+        dest=/etc/nginx/nginx.conf
+      notify: restart nginx
+  handlers:
+    - name: restart nginx
       service:
-        name: nginx
-        state: started
-        enabled: yes  # if you want to also enable nginx
+        name=nginx
+        state=restarted
+        enabled: yes  
