@@ -10,8 +10,9 @@
   - name: "install nginx"
     apt:
       name: ['nginx']
-      state: started
-      enabled: yes 
+       enabled: yes 
+    
+     
 
       
      
